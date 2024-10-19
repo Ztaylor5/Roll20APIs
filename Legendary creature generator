@@ -1,0 +1,85 @@
+on('ready', () => {
+    const legendaryCreatures = [
+        {
+            name: 'Derranged Mirelurk Queen',
+            health: 250,
+            body: 10,
+            mind: 10,
+            damage: '9CD',
+            Defense: 2,
+            DR: 15 all except face which is dr 7 difficulty +1
+            abilities: ['Regeneration', 'Spit Acid', Mind blast],
+            description: 'A massive, mutated creature found in the swamps.'
+        },
+        {
+            name: 'Deathclaw Berserker',
+            health: 220,
+            damage: '8CD',
+            body: 9,
+            mind: 8,
+            Defense: 2,
+            DR: 10 all except stomach which is dr 5 difficulty to hit +2
+            abilities: ['Screech', 'Rage'],
+            description: 'A ferocious predator, feared by all who cross its path.'
+        },
+        {
+            name: 'Invincible Super Mutant Behemoth',
+            health: 200,
+            damage: '12CD',
+            body: 12,
+            mind: 5,
+            Defense: 1,
+            DR: 6 all, 
+            abilities: ['Throw Boulders', 'Smash'],
+            description: 'An enormous super mutant, a true force of destruction.'
+        },
+        {
+            name: 'Ravenous Radscorpion',
+            health: 180,
+            damage: '6CD',
+            body: 9,
+            mind: 6,
+            defense: 1,
+            DR: 10 all and stomach-4 difficulty +1 if flipped,
+            abilities: ['Poison Sting', 'Camouflage'],
+            description: 'A highly dangerous, mutated scorpion.'
+        },
+        {
+            name: 'Giant Ant',
+            health: 50,
+            damage: '5CD',
+            body: 7,
+            mind: 3,
+            defense: 1,
+            DR: 8 all,
+            abilities: ['Swarm', 'Bite'],
+            description: 'Large mutated ants that travel in swarms.'
+        }
+    ];
+
+    const getRandomCreature = () => {
+        return legendaryCreatures[Math.floor(Math.random() * legendaryCreatures.length)];
+    };
+
+    const generateStatBlock = (creature) => {
+        return `
+        **Name:** ${creature.name}
+        **Health:** ${creature.health}
+        **Damage:** ${creature.damage}
+        **Body:** ${creature.body}
+        **Mind:** ${creature.mind}
+        **Defense:** ${creature.armor}
+        **dr:** ${creature.DR}
+        **Abilities:** ${creature.abilities.join(', ')}
+        **Description:** ${creature.description}
+        `;
+    };
+
+    on('chat:message', (msg) => {
+        if (msg.type === 'api' && msg.content.startsWith('!randomcreature')) {
+            const creature = getRandomCreature();
+            const statBlock = generateStatBlock(creature);
+            sendChat('Legendary Creature', statBlock);
+        }
+    });
+});
